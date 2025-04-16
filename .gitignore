@@ -4,3 +4,5 @@ test.py
 .vscode
 .venv
 /engine/rules/__pycache__
+/middleware/node_modules
+/client/node_modules

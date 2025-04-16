@@ -1686,3 +1686,7 @@
 {"timestamp": "2025-04-16T12:27:47.467097", "type": "SYN Flood Attempt", "ip": "192.168.0.169", "syn_count": 7}
 {"timestamp": "2025-04-16T12:27:47.725596", "type": "SYN Flood Attempt", "ip": "192.168.0.169", "syn_count": 6}
 {"timestamp": "2025-04-16T12:27:55.149199", "type": "SYN Flood Attempt", "ip": "192.168.0.169", "syn_count": 6}
+{"timestamp": "2025-04-16T12:38:59.535944", "type": "SYN Flood Attempt", "ip": "192.168.0.169", "syn_count": 7}
+{"timestamp": "2025-04-16T12:39:03.656172", "type": "SYN Flood Attempt", "ip": "192.168.0.169", "syn_count": 6}
+{"timestamp": "2025-04-16T12:39:11.180900", "type": "SYN Flood Attempt", "ip": "192.168.0.169", "syn_count": 6}
+{"timestamp": "2025-04-16T12:39:47.684429", "type": "SYN Flood Attempt", "ip": "192.168.0.169", "syn_count": 6}
