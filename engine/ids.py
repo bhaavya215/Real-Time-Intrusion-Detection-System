@@ -50,7 +50,7 @@ def start_sniffing():
     """Start packet sniffing with cleanup on exit."""
     print("[+] Sniffing started... Press Ctrl+C to stop.")
     try:
-        sniff(filter="tcp", prn=detect_packet, store=0)
+        sniff(filter="tcp", prn=detect_packet, store=0)  # Auto-select interface
     except KeyboardInterrupt:
         print("\n[-] Sniffing stopped by user.")
     finally:
