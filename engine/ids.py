@@ -37,6 +37,10 @@ def detect_packet(pkt):
     """Detect suspicious packets based on loaded rules."""
     if IP in pkt and TCP in pkt:
         src_ip = pkt[IP].src
+        '''
+        if src_ip == "192.168.0.169":  # Skip your own IP
+            return
+        '''
         if pkt[TCP].flags == 'S':  # Check for SYN flag
             syn_tracker[src_ip] = syn_tracker.get(src_ip, 0) + 1
             if syn_tracker[src_ip] > alert_threshold:
