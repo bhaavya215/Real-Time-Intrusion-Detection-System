@@ -4324,5 +4324,533 @@
         "type": "SYN Flood Attempt",
         "ip": "192.168.0.169",
         "syn_count": 6
+    },
+    {
+        "timestamp": "2025-04-18T12:15:21.534391",
+        "type": "SYN Flood Attempt",
+        "ip": "192.168.0.169",
+        "syn_count": 6
+    },
+    {
+        "timestamp": "2025-04-18T12:40:00.958473",
+        "type": "SYN Flood Attempt",
+        "ip": "192.168.0.169",
+        "count": 7
+    },
+    {
+        "timestamp": "2025-04-18T12:40:01.522841",
+        "type": "ACK Scan Detected",
+        "ip": "192.168.0.169",
+        "count": 21
+    },
+    {
+        "timestamp": "2025-04-18T12:40:02.580988",
+        "type": "SYN Flood Attempt",
+        "ip": "192.168.0.169",
+        "count": 6
+    },
+    {
+        "timestamp": "2025-04-18T12:40:06.160479",
+        "type": "SYN Flood Attempt",
+        "ip": "192.168.0.169",
+        "count": 6
+    },
+    {
+        "timestamp": "2025-04-18T12:40:06.435836",
+        "type": "ACK Scan Detected",
+        "ip": "192.168.0.169",
+        "count": 21
+    },
+    {
+        "timestamp": "2025-04-18T12:40:29.675766",
+        "type": "ACK Scan Detected",
+        "ip": "192.168.0.169",
+        "count": 21
+    },
+    {
+        "timestamp": "2025-04-18T12:40:30.830564",
+        "type": "SYN Flood Attempt",
+        "ip": "192.168.0.169",
+        "count": 6
+    },
+    {
+        "timestamp": "2025-04-18T12:40:35.507951",
+        "type": "SYN Flood Attempt",
+        "ip": "192.168.0.169",
+        "count": 6
+    },
+    {
+        "timestamp": "2025-04-18T12:40:37.847217",
+        "type": "SYN Flood Attempt",
+        "ip": "192.168.0.169",
+        "count": 6
+    },
+    {
+        "timestamp": "2025-04-18T12:40:37.925764",
+        "type": "ACK Scan Detected",
+        "ip": "192.168.0.169",
+        "count": 21
+    },
+    {
+        "timestamp": "2025-04-18T12:40:38.266234",
+        "type": "SYN Flood Attempt",
+        "ip": "192.168.0.169",
+        "count": 6
+    },
+    {
+        "timestamp": "2025-04-18T12:40:38.282248",
+        "type": "SYN Flood Attempt",
+        "ip": "192.168.0.169",
+        "count": 6
+    },
+    {
+        "timestamp": "2025-04-18T12:40:38.298141",
+        "type": "SYN Flood Attempt",
+        "ip": "192.168.0.169",
+        "count": 6
+    },
+    {
+        "timestamp": "2025-04-18T12:40:38.329875",
+        "type": "ACK Scan Detected",
+        "ip": "192.168.0.169",
+        "count": 21
+    },
+    {
+        "timestamp": "2025-04-18T12:40:38.384357",
+        "type": "ACK Scan Detected",
+        "ip": "192.168.0.169",
+        "count": 21
+    },
+    {
+        "timestamp": "2025-04-18T12:40:38.448055",
+        "type": "ACK Scan Detected",
+        "ip": "192.168.0.169",
+        "count": 21
+    },
+    {
+        "timestamp": "2025-04-18T12:40:39.872649",
+        "type": "SYN Flood Attempt",
+        "ip": "192.168.0.169",
+        "count": 6
+    },
+    {
+        "timestamp": "2025-04-18T12:40:40.206672",
+        "type": "ACK Scan Detected",
+        "ip": "192.168.0.169",
+        "count": 21
+    },
+    {
+        "timestamp": "2025-04-18T12:40:41.739217",
+        "type": "SYN Flood Attempt",
+        "ip": "192.168.0.169",
+        "count": 6
+    },
+    {
+        "timestamp": "2025-04-18T12:40:41.859935",
+        "type": "ACK Scan Detected",
+        "ip": "192.168.0.169",
+        "count": 21
+    },
+    {
+        "timestamp": "2025-04-18T12:41:05.444659",
+        "type": "ACK Scan Detected",
+        "ip": "163.70.145.61",
+        "count": 21
+    },
+    {
+        "timestamp": "2025-04-18T12:41:32.198002",
+        "type": "SYN Flood Attempt",
+        "ip": "192.168.0.169",
+        "count": 6
+    },
+    {
+        "timestamp": "2025-04-18T12:41:32.557402",
+        "type": "ACK Scan Detected",
+        "ip": "192.168.0.169",
+        "count": 21
+    },
+    {
+        "timestamp": "2025-04-18T12:41:37.211692",
+        "type": "SYN Flood Attempt",
+        "ip": "192.168.0.169",
+        "count": 6
+    },
+    {
+        "timestamp": "2025-04-18T12:41:38.408213",
+        "type": "ACK Scan Detected",
+        "ip": "192.168.0.169",
+        "count": 21
+    },
+    {
+        "timestamp": "2025-04-18T12:42:25.134446",
+        "type": "ACK Scan Detected",
+        "ip": "192.168.0.169",
+        "count": 21
+    },
+    {
+        "timestamp": "2025-04-18T12:42:30.843261",
+        "type": "SYN Flood Attempt",
+        "ip": "192.168.0.169",
+        "count": 6
+    },
+    {
+        "timestamp": "2025-04-18T12:42:31.791639",
+        "type": "ACK Scan Detected",
+        "ip": "192.168.0.169",
+        "count": 21
+    },
+    {
+        "timestamp": "2025-04-18T12:42:43.427998",
+        "type": "ACK Scan Detected",
+        "ip": "192.168.0.169",
+        "count": 21
+    },
+    {
+        "timestamp": "2025-04-18T12:43:04.148093",
+        "type": "SYN Flood Attempt",
+        "ip": "192.168.0.169",
+        "count": 6
+    },
+    {
+        "timestamp": "2025-04-18T12:43:05.885993",
+        "type": "ACK Scan Detected",
+        "ip": "192.168.0.169",
+        "count": 21
+    },
+    {
+        "timestamp": "2025-04-18T12:43:11.338882",
+        "type": "SYN Flood Attempt",
+        "ip": "192.168.0.169",
+        "count": 6
+    },
+    {
+        "timestamp": "2025-04-18T12:43:14.559574",
+        "type": "ACK Scan Detected",
+        "ip": "20.250.119.64",
+        "count": 21
+    },
+    {
+        "timestamp": "2025-04-18T12:43:14.662146",
+        "type": "SYN Flood Attempt",
+        "ip": "192.168.0.169",
+        "count": 6
+    },
+    {
+        "timestamp": "2025-04-18T12:43:15.239005",
+        "type": "ACK Scan Detected",
+        "ip": "192.168.0.169",
+        "count": 21
+    },
+    {
+        "timestamp": "2025-04-18T12:43:16.084329",
+        "type": "ACK Scan Detected",
+        "ip": "140.82.114.22",
+        "count": 21
+    },
+    {
+        "timestamp": "2025-04-18T12:43:16.098711",
+        "type": "ACK Scan Detected",
+        "ip": "20.250.119.64",
+        "count": 21
+    },
+    {
+        "timestamp": "2025-04-18T12:43:16.536819",
+        "type": "ACK Scan Detected",
+        "ip": "140.82.114.22",
+        "count": 21
+    },
+    {
+        "timestamp": "2025-04-18T12:43:16.705202",
+        "type": "ACK Scan Detected",
+        "ip": "163.70.145.61",
+        "count": 21
+    },
+    {
+        "timestamp": "2025-04-18T12:43:16.744180",
+        "type": "ACK Scan Detected",
+        "ip": "192.168.0.169",
+        "count": 21
+    },
+    {
+        "timestamp": "2025-04-18T12:43:30.012614",
+        "type": "ACK Scan Detected",
+        "ip": "140.82.114.22",
+        "count": 21
+    },
+    {
+        "timestamp": "2025-04-18T12:43:31.551107",
+        "type": "ACK Scan Detected",
+        "ip": "140.82.114.22",
+        "count": 21
+    },
+    {
+        "timestamp": "2025-04-18T12:44:19.545117",
+        "type": "ACK Scan Detected",
+        "ip": "52.168.117.168",
+        "count": 21
+    },
+    {
+        "timestamp": "2025-04-18T12:44:35.738744",
+        "type": "Suspicious SYN-ACK Scan",
+        "ip": "194.238.19.42",
+        "count": 11
+    },
+    {
+        "timestamp": "2025-04-18T12:44:48.620438",
+        "type": "Port Scan Detected",
+        "ip": "194.238.19.42",
+        "count": 16
+    },
+    {
+        "timestamp": "2025-04-18T12:44:50.908705",
+        "type": "Suspicious SYN-ACK Scan",
+        "ip": "194.238.19.42",
+        "count": 11
+    },
+    {
+        "timestamp": "2025-04-18T12:44:55.402434",
+        "type": "Suspicious SYN-ACK Scan",
+        "ip": "194.238.19.42",
+        "count": 11
+    },
+    {
+        "timestamp": "2025-04-18T12:44:55.411097",
+        "type": "Port Scan Detected",
+        "ip": "194.238.19.42",
+        "count": 16
+    },
+    {
+        "timestamp": "2025-04-18T12:44:55.424761",
+        "type": "Suspicious SYN-ACK Scan",
+        "ip": "194.238.19.42",
+        "count": 11
+    },
+    {
+        "timestamp": "2025-04-18T12:44:55.516810",
+        "type": "Port Scan Detected",
+        "ip": "194.238.19.42",
+        "count": 16
+    },
+    {
+        "timestamp": "2025-04-18T12:44:55.588805",
+        "type": "ACK Scan Detected",
+        "ip": "194.238.19.42",
+        "count": 21
+    },
+    {
+        "timestamp": "2025-04-18T12:44:55.608821",
+        "type": "Port Scan Detected",
+        "ip": "194.238.19.42",
+        "count": 16
+    },
+    {
+        "timestamp": "2025-04-18T12:44:55.652332",
+        "type": "Port Scan Detected",
+        "ip": "194.238.19.42",
+        "count": 16
+    },
+    {
+        "timestamp": "2025-04-18T12:44:55.710999",
+        "type": "Port Scan Detected",
+        "ip": "194.238.19.42",
+        "count": 16
+    },
+    {
+        "timestamp": "2025-04-18T12:44:55.777383",
+        "type": "Suspicious SYN-ACK Scan",
+        "ip": "194.238.19.42",
+        "count": 11
+    },
+    {
+        "timestamp": "2025-04-18T12:44:55.777383",
+        "type": "Port Scan Detected",
+        "ip": "194.238.19.42",
+        "count": 16
+    },
+    {
+        "timestamp": "2025-04-18T12:44:55.794000",
+        "type": "ACK Scan Detected",
+        "ip": "194.238.19.42",
+        "count": 21
+    },
+    {
+        "timestamp": "2025-04-18T12:44:55.841157",
+        "type": "Port Scan Detected",
+        "ip": "194.238.19.42",
+        "count": 16
+    },
+    {
+        "timestamp": "2025-04-18T12:44:55.886066",
+        "type": "Suspicious SYN-ACK Scan",
+        "ip": "194.238.19.42",
+        "count": 11
+    },
+    {
+        "timestamp": "2025-04-18T12:44:55.894915",
+        "type": "Port Scan Detected",
+        "ip": "194.238.19.42",
+        "count": 16
+    },
+    {
+        "timestamp": "2025-04-18T12:44:55.950905",
+        "type": "ACK Scan Detected",
+        "ip": "194.238.19.42",
+        "count": 21
+    },
+    {
+        "timestamp": "2025-04-18T12:44:55.960054",
+        "type": "Port Scan Detected",
+        "ip": "194.238.19.42",
+        "count": 16
+    },
+    {
+        "timestamp": "2025-04-18T12:44:56.019400",
+        "type": "TCP RST Flood Attack",
+        "ip": "194.238.19.42",
+        "count": 21
+    },
+    {
+        "timestamp": "2025-04-18T12:44:56.026521",
+        "type": "Port Scan Detected",
+        "ip": "194.238.19.42",
+        "count": 16
+    },
+    {
+        "timestamp": "2025-04-18T12:44:56.061881",
+        "type": "Port Scan Detected",
+        "ip": "194.238.19.42",
+        "count": 16
+    },
+    {
+        "timestamp": "2025-04-18T12:44:56.157161",
+        "type": "ACK Scan Detected",
+        "ip": "194.238.19.42",
+        "count": 21
+    },
+    {
+        "timestamp": "2025-04-18T12:44:56.319457",
+        "type": "Port Scan Detected",
+        "ip": "194.238.19.42",
+        "count": 16
+    },
+    {
+        "timestamp": "2025-04-18T12:44:56.327645",
+        "type": "Suspicious SYN-ACK Scan",
+        "ip": "194.238.19.42",
+        "count": 11
+    },
+    {
+        "timestamp": "2025-04-18T12:44:56.621042",
+        "type": "ACK Scan Detected",
+        "ip": "194.238.19.42",
+        "count": 21
+    },
+    {
+        "timestamp": "2025-04-18T12:44:56.626893",
+        "type": "Port Scan Detected",
+        "ip": "194.238.19.42",
+        "count": 16
+    },
+    {
+        "timestamp": "2025-04-18T12:44:56.653110",
+        "type": "TCP RST Flood Attack",
+        "ip": "194.238.19.42",
+        "count": 21
+    },
+    {
+        "timestamp": "2025-04-18T12:44:56.894810",
+        "type": "Suspicious SYN-ACK Scan",
+        "ip": "194.238.19.42",
+        "count": 11
+    },
+    {
+        "timestamp": "2025-04-18T12:44:57.099848",
+        "type": "Port Scan Detected",
+        "ip": "194.238.19.42",
+        "count": 16
+    },
+    {
+        "timestamp": "2025-04-18T12:44:57.108503",
+        "type": "ACK Scan Detected",
+        "ip": "194.238.19.42",
+        "count": 21
+    },
+    {
+        "timestamp": "2025-04-18T12:45:00.605368",
+        "type": "Suspicious SYN-ACK Scan",
+        "ip": "194.238.19.42",
+        "count": 11
+    },
+    {
+        "timestamp": "2025-04-18T12:45:00.746203",
+        "type": "Port Scan Detected",
+        "ip": "194.238.19.42",
+        "count": 16
+    },
+    {
+        "timestamp": "2025-04-18T12:45:00.812702",
+        "type": "ACK Scan Detected",
+        "ip": "194.238.19.42",
+        "count": 21
+    },
+    {
+        "timestamp": "2025-04-18T12:45:19.368189",
+        "type": "ACK Scan Detected",
+        "ip": "20.42.65.94",
+        "count": 21
+    },
+    {
+        "timestamp": "2025-04-18T12:45:21.882210",
+        "type": "Suspicious SYN-ACK Scan",
+        "ip": "194.238.19.42",
+        "count": 11
+    },
+    {
+        "timestamp": "2025-04-18T12:45:21.973867",
+        "type": "ACK Scan Detected",
+        "ip": "194.238.19.42",
+        "count": 21
+    },
+    {
+        "timestamp": "2025-04-18T12:45:22.439382",
+        "type": "ACK Scan Detected",
+        "ip": "194.238.19.42",
+        "count": 21
+    },
+    {
+        "timestamp": "2025-04-18T12:45:24.399005",
+        "type": "ACK Scan Detected",
+        "ip": "194.238.19.42",
+        "count": 21
+    },
+    {
+        "timestamp": "2025-04-18T12:45:24.515080",
+        "type": "ACK Scan Detected",
+        "ip": "194.238.19.42",
+        "count": 21
+    },
+    {
+        "timestamp": "2025-04-18T12:45:24.698355",
+        "type": "ACK Scan Detected",
+        "ip": "194.238.19.42",
+        "count": 21
+    },
+    {
+        "timestamp": "2025-04-18T12:45:25.144571",
+        "type": "ACK Scan Detected",
+        "ip": "194.238.19.42",
+        "count": 21
+    },
+    {
+        "timestamp": "2025-04-18T12:45:45.485393",
+        "type": "ACK Scan Detected",
+        "ip": "20.42.65.88",
+        "count": 21
+    },
+    {
+        "timestamp": "2025-04-18T12:46:24.818983",
+        "type": "ACK Scan Detected",
+        "ip": "104.208.16.90",
+        "count": 21
     }
 ]
