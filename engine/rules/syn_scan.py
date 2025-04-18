@@ -1,5 +1,5 @@
 from scapy.all import IP, TCP, UDP, ICMP
-
+#kdd 99
 def check_syn_flood(pkt, log_alert, tracker):
     """Detect SYN flood attacks by excessive SYN packets from one IP."""
     if IP in pkt and TCP in pkt:

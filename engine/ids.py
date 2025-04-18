@@ -19,18 +19,31 @@ def initialize_logs():
     os.makedirs(LOG_DIR, exist_ok=True)
     if not os.path.exists(LOG_FILE):
         with open(LOG_FILE, 'w') as f:
-            f.write('[]\n')  # Initialize as JSON array
+            json.dump([], f)  # initialize as empty JSON array
+
 
 def log_alert(ip, count, rule_type="SYN Flood Attempt"):
-    """Log an alert to the JSON file."""
+    """Log an alert to the JSON file in proper JSON array format."""
+    # Read existing logs
+    with open(LOG_FILE, 'r') as f:
+        try:
+            logs = json.load(f)
+        except json.JSONDecodeError:
+            logs = []
+
+    # Append new alert
     alert = {
         "timestamp": datetime.datetime.now().isoformat(),
         "type": rule_type,
         "ip": ip,
         "syn_count": count
     }
-    with open(LOG_FILE, 'a') as f:
-        f.write(json.dumps(alert) + "\n")
+    logs.append(alert)
+
+    # Write the updated list back to the file
+    with open(LOG_FILE, 'w') as f:
+        json.dump(logs, f, indent=4)
+
     print(f"[ALERT] {rule_type} from {ip} ({count} packets)")
 
 def detect_packet(pkt):
