@@ -11,35 +11,35 @@ This IDS leverages the Scapy library to analyze network packets and identify mal
 ```
 
 PROJECT_ROOT/
-├── .venv/ # Virtual environment for Python dependencies
-├── .vscode/ # VS Code configuration files
-├── client/ # React frontend application
-│ ├── node_modules/ # Node.js dependencies for the client
-│ ├── public/ # Static assets (e.g., index.html)
-│ ├── src/ # React source files (e.g., App.jsx, App.css)
-│ ├── package.json # Client-side npm configuration
-│ ├── package-lock.json # Lock file for client dependencies
-│ ├── tailwind.config.js # Tailwind CSS configuration (optional)
-│ ├── postcss.config.js # PostCSS configuration (optional)
-│ ├── vite.config.js # Vite configuration
-│ └── ... # Other client files
-├── engine/ # Python scripts for packet sniffing and rule logic
-│ ├── ids.py # Main IDS logic
-│ ├── rules/ # Detection rule definitions (e.g., syn_scan.py)
-│ └── ... # Other engine files
-├── logs/ # Directory for storing alert logs (e.g., alerts.json)
-├── middleware/ # Node.js/Express API server
-│ ├── node_modules/ # Node.js dependencies for the middleware
-│ ├── index.js # Main middleware script
-│ ├── package.json # Middleware npm configuration
-│ ├── package-lock.json # Lock file for middleware dependencies
-│ └── ... # Other middleware files
-├── shared/ # Shared resources (if any)
-├── .gitignore # Git ignore file
-├── package-lock.json # Project root lock file (if applicable)
-├── package.json # Project root npm configuration (if applicable)
-├── README.md # This file
-└── test.py # Example Python script (for testing)
+├── .venv/                  # Virtual environment for Python dependencies
+├── .vscode/                # VS Code configuration files
+├── client/                 # React frontend application
+│ ├── node_modules/         # Node.js dependencies for the client
+│ ├── public/               # Static assets (e.g., index.html)
+│ ├── src/                  # React source files (e.g., App.jsx, App.css)
+│ ├── package.json          # Client-side npm configuration
+│ ├── package-lock.json     # Lock file for client dependencies
+│ ├── tailwind.config.js    # Tailwind CSS configuration (optional)
+│ ├── postcss.config.js     # PostCSS configuration (optional)
+│ ├── vite.config.js        # Vite configuration
+│ └── ...                   # Other client files
+├── engine/                 # Python scripts for packet sniffing and rule logic
+│ ├── ids.py                # Main IDS logic
+│ ├── rules/                # Detection rule definitions (e.g., syn_scan.py)
+│ └── ...                   # Other engine files
+├── logs/                   # Directory for storing alert logs (e.g., alerts.json)
+├── middleware/             # Node.js/Express API server
+│ ├── node_modules/         # Node.js dependencies for the middleware
+│ ├── index.js              # Main middleware script
+│ ├── package.json          # Middleware npm configuration
+│ ├── package-lock.json     # Lock file for middleware dependencies
+│ └── ...                   # Other middleware files
+├── shared/                 # Shared resources
+├── .gitignore              # Git ignore file
+├── package-lock.json       # Project root lock file
+├── package.json            # Project root npm configuration
+├── README.md               # This file
+└── test.py                 # Example Python script (for testing)
 
 ```
 
@@ -50,7 +50,6 @@ PROJECT_ROOT/
 -   **Python** (v3.8 or later)
 -   **Git** (for version control)
 -   **Npcap** (or WinPcap on Windows) for Scapy packet sniffing
--   **Visual Studio Code** (optional, for development)
 
 ## Setup Instructions
 

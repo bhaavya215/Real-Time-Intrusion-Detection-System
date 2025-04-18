@@ -3406,5 +3406,23 @@
         "type": "ACK Scan Detected",
         "ip": "52.182.143.215",
         "count": 21
+    },
+    {
+        "timestamp": "2025-04-18T15:09:49.297515",
+        "type": "ACK Scan Detected",
+        "ip": "172.188.215.153",
+        "count": 21
+    },
+    {
+        "timestamp": "2025-04-18T15:10:03.059128",
+        "type": "ACK Scan Detected",
+        "ip": "52.182.141.63",
+        "count": 21
+    },
+    {
+        "timestamp": "2025-04-18T15:10:06.792189",
+        "type": "Port Scan Detected",
+        "ip": "192.168.0.1",
+        "count": 16
     }
 ]
