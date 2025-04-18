@@ -98,7 +98,7 @@ function App() {
             <div className="IDSLogBox">
                 <h2 className="IDSLogBoxTitle">Alerts & Logs</h2>
                 {logs.length > 0 ? (
-                    logs.map((log, index) => (
+                    [...logs].reverse().map((log, index) => (
                         <div key={index} className="IDSLogEntry">
                             <p>
                                 <strong>Type:</strong> {log.type || "N/A"}
