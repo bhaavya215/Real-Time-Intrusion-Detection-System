@@ -12,7 +12,7 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 # from engine.rules import load_rules  
 try:
     from engine.rules import load_rules  # or specific scan files
-    print("Import successful!")
+    # print("Import successful!")
 except ImportError as e:
     print(f"Error importing rules: {e}")
     sys.exit(1)
