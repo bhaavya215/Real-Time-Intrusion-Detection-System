@@ -71,19 +71,29 @@ app.post("/start", (req, res) => {
  * Stop the IDS process
  */
 app.post("/stop", (req, res) => {
-    if (!idsProcess) {
+    if (!idsProcess || !idsProcess.childProcess) {
+        idsProcess = null;
         return res.status(400).json({ error: "IDS is not running" });
     }
 
     try {
-        idsProcess.send("stop"); // Signal to stop sniffing
+        // Check if the process is still running
+        if (idsProcess.childProcess && !idsProcess.childProcess.killed) {
+            // Send SIGTERM to the Python process to stop it gracefully
+            idsProcess.childProcess.kill("SIGTERM");
+        }
+
+        // Ensure the process is terminated
         idsProcess.end((err) => {
-            if (err) console.error("Error ending Python process:", err);
+            if (err) {
+                console.error("Error ending Python process:", err);
+            }
             idsProcess = null;
+            res.status(200).json({ message: "IDS stopped successfully" });
         });
-        res.status(200).json({ message: "IDS stopped successfully" });
     } catch (err) {
         console.error("Error stopping IDS:", err);
+        idsProcess = null;
         res.status(500).json({ error: "Failed to stop IDS" });
     }
 });
@@ -92,22 +102,19 @@ app.post("/stop", (req, res) => {
  * Read alert logs
  */
 app.get("/logs", (req, res) => {
-    fs.readFile(logsPath, "utf-8", (err, data) => {
-        if (err) {
-            console.error("Error reading logs:", err);
-            return res.status(500).json({ error: "Failed to read logs" });
+    try {
+        const logsPath = path.join(__dirname, "../logs/alerts.json");
+        if (fs.existsSync(logsPath)) {
+            const logs = JSON.parse(fs.readFileSync(logsPath, "utf8"));
+            res.json({ logs: logs || [] });
+        } else {
+            res.json({ logs: [] });
         }
-
-        try {
-            const logs = JSON.parse(data);
-            res.status(200).json({ logs });
-        } catch (parseErr) {
-            console.error("Invalid JSON in logs:", parseErr);
-            res.status(500).json({ error: "Corrupted log format" });
-        }
-    });
+    } catch (err) {
+        console.error("Error reading logs:", err);
+        res.status(500).json({ error: "Failed to fetch logs" });
+    }
 });
-
 /**
  * Get IDS status
  */
@@ -203,6 +210,8 @@ app.get("/blocked-ips", (req, res) => {
 /**
  * POST /unblock-ip - Unblock a specific IP manually
  */
+const blockedIpsPath = path.join(__dirname, "../logs/blocked_ips.json");
+
 app.post("/unblock-ip", (req, res) => {
     const { ip } = req.body;
     if (!ip || !/^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/.test(ip)) {

@@ -1,221 +1,181 @@
-/* App.css */
-
-/* Reset default styles */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-body {
-    font-family: Arial, sans-serif;
-    background-color: #ffffff;
-    color: #000000;
-}
-
-.IDSControlPanelContainer {
-    min-height: 100vh;
-    background-color: #ffffff;
-    color: #000000;
+.App-master {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 20px;
+}
+
+.IDSControlPanelContainer {
     max-width: 1200px;
-    margin: 0 auto;
+    margin: 1rem auto;
+    margin-left: 400px;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+    border-radius: 16px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 .IDSControlPanelTitle {
-    font-size: 2rem; /* Increased for better visibility */
-    font-weight: 700;
-    margin-bottom: 1.5rem;
-    color: #000000;
+    text-align: center;
+    color: #333;
 }
 
 .IDSControlPanelStatus {
-    font-size: 1.2rem;
-    margin-bottom: 1rem;
-    color: #000000;
+    text-align: center;
+    font-size: 1.2em;
+    margin-bottom: 10px;
 }
 
 .statusRunning {
-    color: #2ecc71; /* Green for running */
-    font-weight: 600;
+    color: green;
+    font-weight: bold;
 }
 
 .statusStopped {
-    color: #e74c3c; /* Red for stopped */
-    font-weight: 600;
+    color: red;
+    font-weight: bold;
 }
 
 .IDSControlPanelMessage {
-    font-size: 1rem;
-    margin-bottom: 1.5rem;
-    color: #000000;
+    text-align: center;
+    color: #666;
+    margin-bottom: 20px;
 }
 
 .IDSControlPanelButtonGroup {
     display: flex;
     justify-content: center;
-    gap: 1.5rem;
-    margin-bottom: 2rem;
-    flex-wrap: wrap; /* Allow wrapping on smaller screens */
+    gap: 10px;
+    margin: 20px 0;
 }
 
-.IDSControlButton,
-.IDSControlStopButton {
-    padding: 12px 24px;
-    font-size: 1rem;
+.IDSControlButton {
+    padding: 10px 20px;
+    background-color: white;
+    border: 1px solid #00000033;
+    color: #555;
+    border-radius: 4px;
     cursor: pointer;
-    background-color: #ffffff;
-    color: #000000;
-    font-weight: 600;
-    border: 2px solid #000000;
-    border-radius: 8px;
-    transition: all 0.3s ease;
+    transition: background-color 0.3s;
 }
 
 .IDSControlButton:hover {
-    background-color: #f0f0f0;
+    border: 1px solid #00000033;
+    background-color: #eee;
 }
 
 .IDSControlButton:disabled {
+    background-color: #cccccc;
     cursor: not-allowed;
-    opacity: 0.6;
-    background-color: #ffffff;
-    border-color: #000000;
+}
+
+.IDSControlStartButton {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+.IDSControlStartButton:hover {
+    background-color: #218838;
+    border: none;
 }
 
 .IDSControlStopButton {
-    border-color: #000000;
+    padding: 10px 20px;
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
 }
 
 .IDSControlStopButton:hover {
-    background-color: #f0f0f0;
+    background-color: #b02a37;
 }
 
 .IDSControlStopButton:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+}
+
+.IDSControlDeleteButton {
+    margin-left: 10px;
+    padding: 5px 10px;
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.IDSControlDeleteButton:hover {
+    background-color: #b02a37;
+}
+
+.IDSControlSection {
+    margin-bottom: 30px;
+    padding: 15px;
+    color: #555;
     background-color: #ffffff;
-    border-color: #000000;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.IDSControlSection h2 {
+    margin-top: 0;
+    color: #333;
+}
+
+.IDSControlInputGroup {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+    align-items: center;
+}
+
+.IDSControlInput {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    flex: 1;
 }
 
 .IDSLogBox {
-    background-color: #ffffff;
-    padding: 20px;
-    border: 2px solid #000000;
-    border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    width: 100%;
-    max-width: 600px; /* Increased for better readability */
-    height: 400px; /* Increased for more log visibility */
-    overflow-y: auto;
-    margin-bottom: 20px;
+    margin-top: 20px;
 }
 
 .IDSLogBoxTitle {
-    font-size: 1.5rem; /* Increased for better visibility */
-    font-weight: 600;
-    margin-bottom: 1rem;
-    color: #000000;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.IDSLogScrollArea {
+    max-height: 300px; /* Adjustable height for scrolling */
+    overflow-y: auto; /* Enables vertical scrolling */
+    padding: 10px;
+    color: #555;
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 4px;
 }
 
 .IDSLogEntry {
-    font-size: 1rem; /* Increased for better readability */
-    margin-bottom: 1rem;
-    padding: 12px;
+    padding: 10px;
     background-color: #f9f9f9;
-    border: 1px solid #000000;
-    border-radius: 6px;
-    color: #000000;
+    border-radius: 4px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    margin-bottom: 10px;
 }
 
 .IDSLogEntry p {
-    margin: 0.2rem 0;
+    margin: 5px 0;
 }
 
 .IDSLogNoData {
-    color: #666666;
-    font-style: italic;
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
-    .IDSControlPanelContainer {
-        padding: 15px;
-    }
-
-    .IDSControlPanelTitle {
-        font-size: 1.5rem;
-    }
-
-    .IDSControlPanelStatus {
-        font-size: 1rem;
-    }
-
-    .IDSControlPanelMessage {
-        font-size: 0.9rem;
-    }
-
-    .IDSControlPanelButtonGroup {
-        flex-direction: column;
-        gap: 1rem;
-    }
-
-    .IDSControlButton,
-    .IDSControlStopButton {
-        width: 100%;
-        padding: 10px;
-    }
-
-    .IDSLogBox {
-        max-width: 100%;
-        height: 300px;
-    }
-
-    .IDSLogBoxTitle {
-        font-size: 1.2rem;
-    }
-
-    .IDSLogEntry {
-        font-size: 0.9rem;
-        padding: 10px;
-    }
-}
-
-@media (max-width: 480px) {
-    .IDSControlPanelContainer {
-        padding: 10px;
-    }
-
-    .IDSControlPanelTitle {
-        font-size: 1.2rem;
-    }
-
-    .IDSControlPanelStatus {
-        font-size: 0.9rem;
-    }
-
-    .IDSControlPanelMessage {
-        font-size: 0.8rem;
-    }
-
-    .IDSControlButton,
-    .IDSControlStopButton {
-        padding: 8px;
-        font-size: 0.9rem;
-    }
-
-    .IDSLogBox {
-        height: 250px;
-    }
-
-    .IDSLogBoxTitle {
-        font-size: 1rem;
-    }
-
-    .IDSLogEntry {
-        font-size: 0.8rem;
-        padding: 8px;
-    }
+    color: #666;
+    text-align: center;
+    padding: 10px;
 }

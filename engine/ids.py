@@ -1,15 +1,16 @@
-from scapy.all import sniff, IP, TCP
+from scapy.all import sniff, IP, TCP, get_if_list
 import datetime
 import os
 import json
 import sys
 import threading
 import time
+import requests
+import signal
 
 # Add engine directory to sys.path to resolve import
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-# Assume rules.py will be provided later
 try:
     from engine.rules import load_rules
 except ImportError as e:
@@ -22,6 +23,8 @@ LOG_FILE = os.path.join(LOG_DIR, 'alerts.json')
 BLOCKED_IPS_FILE = os.path.join(os.path.dirname(__file__), 'blocked_ips.json')
 DECAY_INTERVAL = 10  # seconds
 DECAY_AMOUNT = 2
+API_URL = "http://localhost:3000/rules"  # Express API for rules
+LOG_INTERVAL = 5  # seconds for packet logging
 
 # Global state
 running = False
@@ -30,16 +33,49 @@ syn_tracker = {
     'port_scan': {},
     'icmp_flood': {},
     'udp_flood': {},
-    'tcp_rst_flood': {}
+    'tcp_rst_flood': {},
+    'ack_scan': {},
+    'syn_ack_scan': {},
+    'xmas_scan': {}
 }
-blocked_ips = set()  # To sync with /blocked-ips API
+blocked_ips = set()
+thresholds = {}
+packet_count = 0
+packet_lock = threading.Lock()
+
+def signal_handler(sig, frame):
+    """Handle SIGTERM for graceful shutdown."""
+    print("[-] Received SIGTERM, stopping IDS...")
+    stop_sniffing()
+    sys.exit(0)
 
 def initialize_logs():
     """Create logs directory and initialize log file if it doesn't exist."""
     os.makedirs(LOG_DIR, exist_ok=True)
     if not os.path.exists(LOG_FILE):
         with open(LOG_FILE, 'w') as f:
-            json.dump([], f)  # Initialize as empty JSON array
+            json.dump([], f)
+
+def fetch_thresholds():
+    """Fetch rule thresholds from the Express API."""
+    global thresholds
+    try:
+        response = requests.get(API_URL)
+        rules = response.json().get('rules', [])
+        for rule in rules:
+            thresholds[rule['type']] = rule['threshold']
+    except Exception as e:
+        print(f"Error fetching thresholds from API: {e}")
+        thresholds.update({
+            'SYN_FLOOD': 10,
+            'PORT_SCAN': 15,
+            'ICMP_FLOOD': 50,
+            'TCP_RST_FLOOD': 20,
+            'UDP_FLOOD': 30,
+            'ACK_SCAN': 20,
+            'SYN_ACK_SCAN': 10,
+            'XMAS_SCAN': 5
+        })
 
 def update_blocked_ips():
     """Periodically update the blocked_ips set from the JSON file."""
@@ -56,12 +92,12 @@ def update_blocked_ips():
             except json.JSONDecodeError:
                 print("Error parsing blocked_ips.json, resetting to empty set")
                 blocked_ips = set()
-        time.sleep(5)  # Update every 5 seconds
+        time.sleep(5)
 
 def log_alert(ip, count, rule_type="SYN Flood Attempt"):
     """Log an alert to the JSON file in proper JSON array format."""
     if ip in blocked_ips:
-        return  # Skip logging for blocked IPs
+        return
 
     with open(LOG_FILE, 'r') as f:
         try:
@@ -82,51 +118,83 @@ def log_alert(ip, count, rule_type="SYN Flood Attempt"):
 
     print(f"[ALERT] {rule_type} from {ip} ({count} packets)")
 
+def decay_counts():
+    """Periodically decay counts for all attack types to avoid stale alerts."""
+    while running:
+        time.sleep(DECAY_INTERVAL)
+        for attack_type in syn_tracker.keys():
+            tracker = syn_tracker[attack_type]
+            if attack_type == 'port_scan':
+                for ip in list(tracker.keys()):
+                    if len(tracker[ip]) > 0:
+                        tracker[ip] = set()
+            else:
+                for ip in list(tracker.keys()):
+                    tracker[ip] = max(0, tracker[ip] - DECAY_AMOUNT)
+
+def log_packet_stats():
+    """Log packet count and intrusions every interval."""
+    global packet_count
+    last_alerts = []
+    while running:
+        time.sleep(LOG_INTERVAL)
+        with packet_lock:
+            current_count = packet_count
+            packet_count = 0
+        with open(LOG_FILE, 'r') as f:
+            try:
+                logs = json.load(f)
+                last_interval = datetime.datetime.now() - datetime.timedelta(seconds=LOG_INTERVAL)
+                last_alerts = [log for log in logs[-10:] if log["timestamp"] >= last_interval.isoformat()]
+            except (json.JSONDecodeError, KeyError):
+                last_alerts = []
+        print(f"[STATS] Packets detected in last {LOG_INTERVAL} seconds: {current_count}, Intrusions: {len(last_alerts)} - {last_alerts}")
+
 def detect_packet(pkt):
     """Detect suspicious packets based on loaded rules."""
     if not running:
         return
 
-    if IP in pkt and TCP in pkt:
+    if IP in pkt:
+        with packet_lock:
+            global packet_count
+            packet_count += 1
+
         src_ip = pkt[IP].src
         
-        if src_ip in blocked_ips or src_ip == "192.168.0.169":  # Skip your own IP or blocked IPs
+        if src_ip in blocked_ips:
             return
 
-        if pkt[TCP].flags == 'S':  # Check for SYN flag
-            syn_tracker.setdefault(src_ip, 0)
-            syn_tracker[src_ip] += 1
-            if syn_tracker[src_ip] > 5:  # Use dynamic threshold from rules later
-                log_alert(src_ip, syn_tracker[src_ip])
-                syn_tracker[src_ip] = 0  # Reset counter after alert
-
-        # Apply all rules from loaded modules dynamically
         for rule_func in load_rules():
-            rule_func(pkt, log_alert, syn_tracker, blocked_ips)
-
-def decay_syn_counts():
-    """Periodically decay SYN counts to avoid stale alerts."""
-    while running:
-        time.sleep(DECAY_INTERVAL)
-        for ip in list(syn_tracker.keys()):
-            syn_tracker[ip] = max(0, syn_tracker[ip] - DECAY_AMOUNT)
+            rule_func(pkt, log_alert, syn_tracker, thresholds)
 
 def start_sniffing():
-    """Start packet sniffing."""
+    """Start packet sniffing on all available interfaces."""
     global running
     running = True
-    print("[+] Sniffing started...")
+    print("[+] Sniffing started on all interfaces...")
+
+    # Fetch thresholds from API
+    fetch_thresholds()
 
     # Start decay thread
-    decay_thread = threading.Thread(target=decay_syn_counts, daemon=True)
+    decay_thread = threading.Thread(target=decay_counts, daemon=True)
     decay_thread.start()
 
     # Start blocked IPs update thread
     blocked_ips_thread = threading.Thread(target=update_blocked_ips, daemon=True)
     blocked_ips_thread.start()
 
+    # Start packet stats logging thread
+    stats_thread = threading.Thread(target=log_packet_stats, daemon=True)
+    stats_thread.start()
+
+    # Get all available interfaces
+    interfaces = get_if_list()  # List all interfaces
+
     try:
-        sniff(filter="ip", prn=detect_packet, store=0)
+        # Start sniffing on all interfaces
+        sniff(iface=interfaces, filter="ip", prn=detect_packet, store=0)
     except Exception as e:
         print(f"[-] Sniffing error: {e}")
     finally:
@@ -140,9 +208,9 @@ def stop_sniffing():
     print("[-] Sniffing stopped.")
 
 if __name__ == "__main__":
+    # Register signal handler for SIGTERM
+    signal.signal(signal.SIGTERM, signal_handler)
     initialize_logs()
-    # Run sniffing directly if not controlled by API
     start_sniffing()
 else:
-    # Expose functions for API control
     __all__ = ['start_sniffing', 'stop_sniffing', 'log_alert', 'blocked_ips']

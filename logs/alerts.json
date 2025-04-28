@@ -11920,5 +11920,41 @@
         "type": "ACK Scan Detected",
         "ip": "140.82.113.21",
         "count": 21
+    },
+    {
+        "timestamp": "2025-04-28T17:28:31.664577",
+        "type": "ACK Scan Detected",
+        "ip": "127.0.0.1",
+        "count": 21
+    },
+    {
+        "timestamp": "2025-04-28T17:28:37.402750",
+        "type": "ACK Scan Detected",
+        "ip": "40.79.173.41",
+        "count": 21
+    },
+    {
+        "timestamp": "2025-04-28T17:28:38.698562",
+        "type": "SYN Flood Attack",
+        "ip": "127.0.0.1",
+        "count": 11
+    },
+    {
+        "timestamp": "2025-04-28T17:28:51.920130",
+        "type": "SYN Flood Attack",
+        "ip": "127.0.0.1",
+        "count": 11
+    },
+    {
+        "timestamp": "2025-04-28T17:28:57.660077",
+        "type": "ACK Scan Detected",
+        "ip": "192.168.67.101",
+        "count": 21
+    },
+    {
+        "timestamp": "2025-04-28T17:29:17.763631",
+        "type": "ACK Scan Detected",
+        "ip": "192.168.67.101",
+        "count": 21
     }
 ]
