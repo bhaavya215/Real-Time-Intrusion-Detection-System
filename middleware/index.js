@@ -3,6 +3,7 @@ const { spawn } = require("child_process");
 const cors = require("cors");
 const fs = require("fs");
 const path = require("path");
+const { PythonShell } = require("python-shell");
 
 const app = express();
 const port = 3000;
@@ -10,12 +11,21 @@ const port = 3000;
 app.use(cors());
 app.use(express.json());
 
-// Global state for IDS process
 let idsProcess = null;
+let rules = [];
+let blockedIps = new Set();
 
-// Paths
 const pythonScriptPath = path.join(__dirname, "../engine/ids.py");
 const logsPath = path.join(__dirname, "../logs/alerts.json");
+
+if (!fs.existsSync(logsPath)) {
+    fs.writeFileSync(logsPath, JSON.stringify([]));
+}
+
+// Load blocked IPs from API on startup
+app.get("/blocked-ips", (req, res) => {
+    res.status(200).json({ blockedIps: Array.from(blockedIps) });
+});
 
 /**
  * Start the IDS process
@@ -28,14 +38,18 @@ app.post("/start", (req, res) => {
     }
 
     try {
-        idsProcess = spawn("python", ["-u", pythonScriptPath]);
-
-        idsProcess.stdout.on("data", (data) => {
-            console.log(`[Python STDOUT] ${data}`);
+        idsProcess = new PythonShell(pythonScriptPath, {
+            mode: "text",
+            pythonOptions: ["-u"], // Unbuffered output
+            args: ["start"], // Signal to start sniffing
         });
 
-        idsProcess.stderr.on("data", (data) => {
-            console.error(`[Python STDERR] ${data}`);
+        idsProcess.on("message", (message) => {
+            console.log(`[Python] ${message}`);
+        });
+
+        idsProcess.on("error", (err) => {
+            console.error(`[Python Error] ${err}`);
         });
 
         idsProcess.on("close", (code) => {
@@ -45,7 +59,7 @@ app.post("/start", (req, res) => {
 
         res.status(200).json({
             message: "IDS started successfully",
-            pid: idsProcess.pid,
+            pid: idsProcess.childProcess.pid,
         });
     } catch (err) {
         console.error("Error starting IDS:", err);
@@ -62,8 +76,11 @@ app.post("/stop", (req, res) => {
     }
 
     try {
-        idsProcess.kill("SIGINT");
-        idsProcess = null;
+        idsProcess.send("stop"); // Signal to stop sniffing
+        idsProcess.end((err) => {
+            if (err) console.error("Error ending Python process:", err);
+            idsProcess = null;
+        });
         res.status(200).json({ message: "IDS stopped successfully" });
     } catch (err) {
         console.error("Error stopping IDS:", err);
@@ -108,8 +125,147 @@ app.get("/status", (req, res) => {
 app.get("/", (req, res) => {
     res.send("IDS Middleware API is running.");
 });
+app.get("/rules", (req, res) => {
+    res.status(200).json({ rules });
+});
 
-// Start server
+app.post("/rules", (req, res) => {
+    const { type, threshold, description } = req.body;
+    if (!type || !threshold) {
+        return res
+            .status(400)
+            .json({ error: "Type and threshold are required" });
+    }
+    const newRule = {
+        id: rules.length + 1,
+        type,
+        threshold,
+        description: description || "",
+        createdAt: new Date().toISOString(),
+    };
+    rules.push(newRule);
+    res.status(201).json({ message: "Rule added successfully", rule: newRule });
+});
+
+app.delete("/rules/:id", (req, res) => {
+    const ruleId = parseInt(req.params.id);
+    const ruleIndex = rules.findIndex((rule) => rule.id === ruleId);
+    if (ruleIndex === -1) {
+        return res.status(404).json({ error: "Rule not found" });
+    }
+    rules.splice(ruleIndex, 1);
+    res.status(200).json({ message: "Rule deleted successfully" });
+});
+
+app.get("/alerts", (req, res) => {
+    fs.readFile(logsPath, "utf-8", (err, data) => {
+        if (err) {
+            console.error("Error reading logs for alerts:", err);
+            return res.status(500).json({ error: "Failed to read logs" });
+        }
+        try {
+            const logs = JSON.parse(data);
+            const fiveMinutesAgo = new Date(
+                Date.now() - 5 * 60 * 1000
+            ).toISOString();
+            const activeAlerts = logs.filter(
+                (log) => log.timestamp && log.timestamp >= fiveMinutesAgo
+            );
+            res.status(200).json({ alerts: activeAlerts });
+        } catch (parseErr) {
+            console.error("Invalid JSON in logs:", parseErr);
+            res.status(500).json({ error: "Corrupted log format" });
+        }
+    });
+});
+
+/**
+ * POST /block-ip - Block a specific IP manually
+ */
+
+app.post("/block-ip", (req, res) => {
+    const { ip } = req.body;
+    if (!ip || !/^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/.test(ip)) {
+        return res.status(400).json({ error: "Invalid IP address" });
+    }
+    blockedIps.add(ip);
+    fs.writeFileSync(
+        path.join(__dirname, "../engine/blocked_ips.json"),
+        JSON.stringify(Array.from(blockedIps))
+    );
+    res.status(200).json({ message: `IP ${ip} blocked successfully` });
+    console.log(`Blocked IP: ${ip}`);
+});
+app.get("/blocked-ips", (req, res) => {
+    res.status(200).json({ blockedIps: Array.from(blockedIps) });
+});
+
+/**
+ * POST /unblock-ip - Unblock a specific IP manually
+ */
+app.post("/unblock-ip", (req, res) => {
+    const { ip } = req.body;
+    if (!ip || !/^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/.test(ip)) {
+        return res.status(400).json({ error: "Invalid IP address" });
+    }
+    if (!blockedIps.has(ip)) {
+        return res.status(404).json({ error: "IP not blocked" });
+    }
+    blockedIps.delete(ip);
+    fs.writeFileSync(blockedIpsPath, JSON.stringify(Array.from(blockedIps)));
+    res.status(200).json({ message: `IP ${ip} unblocked successfully` });
+    console.log(`Unblocked IP: ${ip}`);
+});
+
+app.get("/logs/export", (req, res) => {
+    fs.readFile(logsPath, "utf-8", (err, data) => {
+        if (err) {
+            console.error("Error reading logs for export:", err);
+            return res.status(500).json({ error: "Failed to read logs" });
+        }
+        try {
+            const logs = JSON.parse(data);
+            res.setHeader("Content-Type", "application/json");
+            res.setHeader(
+                "Content-Disposition",
+                "attachment; filename=logs.json"
+            );
+            res.status(200).send(logs);
+        } catch (parseErr) {
+            console.error("Invalid JSON in logs:", parseErr);
+            res.status(500).json({ error: "Corrupted log format" });
+        }
+    });
+});
+
+app.post("/reset", (req, res) => {
+    try {
+        fs.writeFileSync(logsPath, JSON.stringify([]));
+        res.status(200).json({ message: "Logs cleared successfully" });
+    } catch (err) {
+        console.error("Error resetting logs:", err);
+        res.status(500).json({ error: "Failed to reset logs" });
+    }
+});
+
+app.post("/shutdown", (req, res) => {
+    if (idsProcess) {
+        idsProcess.kill("SIGINT");
+        idsProcess = null;
+    }
+    try {
+        fs.writeFileSync(logsPath, JSON.stringify([]));
+        rules = [];
+        blockedIps.clear();
+        res.status(200).json({
+            message: "IDS shutdown and state reset successfully",
+        });
+    } catch (err) {
+        console.error("Error during shutdown:", err);
+        res.status(500).json({ error: "Failed to shutdown IDS" });
+    }
+});
+
 app.listen(port, () => {
     console.log(`Middleware server running on http://localhost:${port}`);
 });

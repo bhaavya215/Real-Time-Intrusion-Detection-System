@@ -39,7 +39,6 @@ PROJECT_ROOT/
 ├── package-lock.json       # Project root lock file
 ├── package.json            # Project root npm configuration
 ├── README.md               # This file
-└── test.py                 # Example Python script (for testing)
 
 ```
 
@@ -79,6 +78,7 @@ cd PROJECT_ROOT
     ```bash
     pip install scapy
     ```
+    -   Make sure you have npcap or Winpcap install for running scapy dependency.
 
 ### 3. Install Node.js Dependencies
 
@@ -120,7 +120,7 @@ cd PROJECT_ROOT
 ### 5. Run the Project
 
 -   **Activate the Python Virtual Environment:**
-    -   Run `.venv\Scripts\activate` (Windows) or `source .venv/bin/activate` (macOS/Linux) in the project root.
+    -   Run `.venv\bin\activate` (Windows) or `source .venv/bin/activate` (macOS/Linux) in the project root.
 -   **Start the Middleware Server:**
     -   Navigate to `middleware/`:
         ```bash

@@ -1,3 +1,4 @@
+// App.jsx
 import { useState, useEffect } from "react";
 import axios from "axios";
 import "./App.css";
@@ -62,7 +63,6 @@ function App() {
         }
     };
 
-    // Fetch status and logs once on initial load
     useEffect(() => {
         fetchStatus();
         fetchLogs();
@@ -77,7 +77,16 @@ function App() {
     return (
         <div className="IDSControlPanelContainer">
             <h1 className="IDSControlPanelTitle">IDS Control Panel</h1>
-            <p className="IDSControlPanelStatus">Status: {status}</p>
+            <p className="IDSControlPanelStatus">
+                Status:{" "}
+                <span
+                    className={
+                        status === "Running" ? "statusRunning" : "statusStopped"
+                    }
+                >
+                    {status}
+                </span>
+            </p>
             <p className="IDSControlPanelMessage">{message}</p>
             <div className="IDSControlPanelButtonGroup">
                 <button
