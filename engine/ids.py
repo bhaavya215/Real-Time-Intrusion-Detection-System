@@ -7,8 +7,11 @@ import threading
 import time
 import requests
 import signal
+from scapy.all import get_if_list
+print(get_if_list())
 
-# Add engine directory to sys.path to resolve import
+# source path/to/venv/bin/activate      
+
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 try:
@@ -194,7 +197,7 @@ def start_sniffing():
 
     try:
         # Start sniffing on all interfaces
-        sniff(iface=interfaces, filter="ip", prn=detect_packet, store=0)
+        sniff(iface="en0", filter="ip", prn=detect_packet, store=0)
     except Exception as e:
         print(f"[-] Sniffing error: {e}")
     finally:
