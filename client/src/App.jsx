@@ -246,198 +246,246 @@ function App() {
     }, []);
 
     return (
-        <div className="IDSControlPanelContainer">
-            <h1 className="IDSControlPanelTitle">IDS Control Panel</h1>
-            <div className="IDSControlPanelStatus">
-                Status:{" "}
-                <span
-                    className={
-                        status === "Running" ? "statusRunning" : "statusStopped"
-                    }
-                >
-                    {status}
-                </span>
-            </div>
-            {message && <div className="IDSControlPanelMessage">{message}</div>}
+        <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-950 via-gray-900 to-gray-950 text-gray-100 font-sans px-4 py-8">
+            <div className="w-full max-w-3xl mx-auto shadow-xl rounded-3xl bg-gray-900/80 p-8">
+                <h1 className="text-3xl md:text-4xl font-bold mb-4 text-orange-400 tracking-tight text-center">
+                    IDS Control Panel
+                </h1>
+                <div className="flex justify-center items-center mb-6">
+                    <span className="mr-2 font-medium">Status:</span>
+                    <span
+                        className={
+                            "px-3 py-1 rounded-full text-sm font-bold " +
+                            (status === "Running"
+                                ? "bg-orange-600 text-white"
+                                : "bg-gray-700 text-orange-300")
+                        }
+                    >
+                        {status}
+                    </span>
+                </div>
+                {message && (
+                    <div className="mb-6 p-3 rounded-lg bg-orange-900/70 text-orange-200 text-center font-semibold">
+                        {message}
+                    </div>
+                )}
 
-            <div className="IDSControlPanelButtonGroup">
-                <button
-                    onClick={startIDS}
-                    className="IDSControlButton IDSControlStartButton"
-                    disabled={isLoading || status === "Running"}
-                >
-                    Start IDS
-                </button>
-                <button
-                    onClick={stopIDS}
-                    className="IDSControlStopButton"
-                    disabled={isLoading || status === "Stopped"}
-                >
-                    Stop IDS
-                </button>
-                <button
-                    onClick={shutdownIDS}
-                    className="IDSControlStopButton"
-                    disabled={isLoading}
-                >
-                    Shutdown IDS
-                </button>
-            </div>
-
-            {/* Block IP Section */}
-            <div className="IDSControlSection">
-                <h2>Block an IP</h2>
-                <div className="IDSControlInputGroup">
-                    <input
-                        type="text"
-                        placeholder="IP Address"
-                        value={blockIp}
-                        onChange={(e) => setBlockIp(e.target.value)}
-                        className="IDSControlInput"
-                    />
+                {/* Start/Stop/Shutdown */}
+                <div className="flex flex-wrap gap-4 justify-center mb-8">
                     <button
-                        onClick={blockIP}
-                        className="IDSControlButton"
+                        onClick={startIDS}
+                        className="px-6 py-2 bg-orange-500 hover:bg-orange-600 rounded-lg font-semibold shadow transition disabled:opacity-60"
+                        disabled={isLoading || status === "Running"}
+                    >
+                        Start IDS
+                    </button>
+                    <button
+                        onClick={stopIDS}
+                        className="px-6 py-2 bg-orange-700 hover:bg-orange-800 rounded-lg font-semibold shadow transition disabled:opacity-60"
+                        disabled={isLoading || status === "Stopped"}
+                    >
+                        Stop IDS
+                    </button>
+                    <button
+                        onClick={shutdownIDS}
+                        className="px-6 py-2 bg-gray-800 hover:bg-gray-700 rounded-lg font-semibold shadow transition disabled:opacity-60"
                         disabled={isLoading}
                     >
-                        Block
+                        Shutdown IDS
                     </button>
                 </div>
-            </div>
 
-            {/* Unblock IP Section */}
-            <div className="IDSControlSection">
-                <h2>Unblock an IP</h2>
-                <div className="IDSControlInputGroup">
-                    <input
-                        type="text"
-                        placeholder="IP Address"
-                        value={unblockIp}
-                        onChange={(e) => setUnblockIp(e.target.value)}
-                        className="IDSControlInput"
-                    />
-                    <button
-                        onClick={unblockIP}
-                        className="IDSControlButton"
-                        disabled={isLoading}
-                    >
-                        Unblock
-                    </button>
-                </div>
-            </div>
+                {/* Block IP */}
+                <Section title="Block an IP">
+                    <div className="flex gap-2">
+                        <input
+                            type="text"
+                            placeholder="IP Address"
+                            value={blockIp}
+                            onChange={(e) => setBlockIp(e.target.value)}
+                            className="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 focus:border-orange-400 outline-none text-gray-100 w-full"
+                        />
+                        <button
+                            onClick={blockIP}
+                            className="px-4 py-2 bg-orange-500 hover:bg-orange-600 rounded-lg font-semibold transition disabled:opacity-60"
+                            disabled={isLoading}
+                        >
+                            Block
+                        </button>
+                    </div>
+                </Section>
 
-            {/* Add Rule Section */}
-            <div className="IDSControlSection">
-                <h2>Add Rule</h2>
-                <div className="IDSControlInputGroup">
-                    <input
-                        type="text"
-                        placeholder="Rule Type"
-                        value={ruleType}
-                        onChange={(e) => setRuleType(e.target.value)}
-                        className="IDSControlInput"
-                    />
-                    <input
-                        type="number"
-                        placeholder="Threshold"
-                        value={ruleThreshold}
-                        onChange={(e) => setRuleThreshold(e.target.value)}
-                        className="IDSControlInput"
-                    />
-                    <input
-                        type="text"
-                        placeholder="Description (optional)"
-                        value={ruleDescription}
-                        onChange={(e) => setRuleDescription(e.target.value)}
-                        className="IDSControlInput"
-                    />
-                    <button
-                        onClick={addRule}
-                        className="IDSControlButton"
-                        disabled={isLoading}
-                    >
-                        Add Rule
-                    </button>
-                </div>
-            </div>
+                {/* Unblock IP */}
+                <Section title="Unblock an IP">
+                    <div className="flex gap-2">
+                        <input
+                            type="text"
+                            placeholder="IP Address"
+                            value={unblockIp}
+                            onChange={(e) => setUnblockIp(e.target.value)}
+                            className="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 focus:border-orange-400 outline-none text-gray-100 w-full"
+                        />
+                        <button
+                            onClick={unblockIP}
+                            className="px-4 py-2 bg-orange-500 hover:bg-orange-600 rounded-lg font-semibold transition disabled:opacity-60"
+                            disabled={isLoading}
+                        >
+                            Unblock
+                        </button>
+                    </div>
+                </Section>
 
-            {/* Rules List */}
-            <div className="IDSControlSection">
-                <h2>Existing Rules</h2>
-                {rules.length > 0 ? (
-                    rules.map((rule) => (
-                        <div key={rule.id} className="IDSControlInputGroup">
-                            <span>
-                                {rule.type} - {rule.threshold} -{" "}
-                                {rule.description}
-                            </span>
-                            <button
-                                onClick={() => deleteRule(rule.id)}
-                                className="IDSControlDeleteButton"
-                                disabled={isLoading}
+                {/* Add Rule */}
+                <Section title="Add Rule">
+                    <div className="flex flex-col md:flex-row gap-2">
+                        <input
+                            type="text"
+                            placeholder="Rule Type"
+                            value={ruleType}
+                            onChange={(e) => setRuleType(e.target.value)}
+                            className="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 focus:border-orange-400 outline-none text-gray-100 w-full"
+                        />
+                        <input
+                            type="number"
+                            placeholder="Threshold"
+                            value={ruleThreshold}
+                            onChange={(e) => setRuleThreshold(e.target.value)}
+                            className="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 focus:border-orange-400 outline-none text-gray-100 w-full"
+                        />
+                        <input
+                            type="text"
+                            placeholder="Description (optional)"
+                            value={ruleDescription}
+                            onChange={(e) => setRuleDescription(e.target.value)}
+                            className="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 focus:border-orange-400 outline-none text-gray-100 w-full"
+                        />
+                        <button
+                            onClick={addRule}
+                            className="px-4 py-2 bg-orange-500 hover:bg-orange-600 rounded-lg font-semibold transition disabled:opacity-60"
+                            disabled={isLoading}
+                        >
+                            Add Rule
+                        </button>
+                    </div>
+                </Section>
+
+                {/* Existing Rules */}
+                <Section title="Existing Rules">
+                    {rules.length > 0 ? (
+                        rules.map((rule) => (
+                            <div
+                                key={rule.id}
+                                className="flex justify-between items-center bg-gray-800 rounded-lg px-4 py-2 mb-2"
                             >
-                                Delete
-                            </button>
-                        </div>
-                    ))
-                ) : (
-                    <div>No rules available.</div>
-                )}
-            </div>
-
-            {/* Blocked IPs List */}
-            <div className="IDSControlSection">
-                <h2>Blocked IPs</h2>
-                {blockedIps.length > 0 ? (
-                    blockedIps.map((ip, index) => <div key={index}>{ip}</div>)
-                ) : (
-                    <div>No blocked IPs.</div>
-                )}
-            </div>
-
-            {/* Logs */}
-            <div className="IDSLogBox">
-                <h2 className="IDSLogBoxTitle">Logs</h2>
-                <div className="IDSLogScrollArea">
-                    {logs.length > 0 ? (
-                        logs.map((log, index) => (
-                            <div key={index} className="IDSLogEntry">
-                                <p>
-                                    <strong>Timestamp:</strong> {log.timestamp}
-                                </p>
-                                <p>
-                                    <strong>Type:</strong> {log.type}
-                                </p>
-                                <p>
-                                    <strong>IP Address:</strong> {log.ip}
-                                </p>
-                                <p>
-                                    <strong>Count:</strong> {log.count}
-                                </p>
+                                <span>
+                                    {rule.type} - {rule.threshold} -{" "}
+                                    {rule.description}
+                                </span>
+                                <button
+                                    onClick={() => deleteRule(rule.id)}
+                                    className="px-3 py-1 bg-orange-700 hover:bg-orange-800 rounded-lg font-semibold transition disabled:opacity-60"
+                                    disabled={isLoading}
+                                >
+                                    Delete
+                                </button>
                             </div>
                         ))
                     ) : (
-                        <div className="IDSLogNoData">No logs available.</div>
+                        <div className="text-gray-400 italic">
+                            No rules available.
+                        </div>
                     )}
-                </div>
+                </Section>
 
-                <div className="IDSControlPanelButtonGroup">
-                    <button
-                        onClick={resetLogs}
-                        className="IDSControlButton"
-                        disabled={isLoading}
-                    >
-                        Reset Logs
-                    </button>
-                    <button
-                        onClick={exportLogs}
-                        className="IDSControlButton"
-                        disabled={isLoading}
-                    >
-                        Export Logs
-                    </button>
+                {/* Blocked IPs */}
+                <Section title="Blocked IPs">
+                    {blockedIps.length > 0 ? (
+                        blockedIps.map((ip, index) => (
+                            <div
+                                key={index}
+                                className="bg-gray-800 rounded-lg px-4 py-2 mb-2"
+                            >
+                                {ip}
+                            </div>
+                        ))
+                    ) : (
+                        <div className="text-gray-400 italic">
+                            No blocked IPs.
+                        </div>
+                    )}
+                </Section>
+
+                {/* Logs */}
+                <div className="mt-8 bg-gray-950 rounded-2xl p-6 shadow-lg">
+                    <h2 className="text-xl font-bold text-orange-400 mb-4">
+                        Logs
+                    </h2>
+                    <div className="max-h-64 overflow-y-auto space-y-2 mb-4">
+                        {logs.length > 0 ? (
+                            logs.map((log, index) => (
+                                <div
+                                    key={index}
+                                    className="bg-gray-800 rounded-lg p-3 text-sm"
+                                >
+                                    <p>
+                                        <strong className="text-orange-300">
+                                            Timestamp:
+                                        </strong>{" "}
+                                        {log.timestamp}
+                                    </p>
+                                    <p>
+                                        <strong className="text-orange-300">
+                                            Type:
+                                        </strong>{" "}
+                                        {log.type}
+                                    </p>
+                                    <p>
+                                        <strong className="text-orange-300">
+                                            IP Address:
+                                        </strong>{" "}
+                                        {log.ip}
+                                    </p>
+                                    <p>
+                                        <strong className="text-orange-300">
+                                            Count:
+                                        </strong>{" "}
+                                        {log.count}
+                                    </p>
+                                </div>
+                            ))
+                        ) : (
+                            <div className="text-gray-400 italic">
+                                No logs available.
+                            </div>
+                        )}
+                    </div>
+                    <div className="flex gap-4">
+                        <button
+                            onClick={resetLogs}
+                            className="px-4 py-2 bg-orange-500 hover:bg-orange-600 rounded-lg font-semibold transition disabled:opacity-60"
+                            disabled={isLoading}
+                        >
+                            Reset Logs
+                        </button>
+                        <button
+                            onClick={exportLogs}
+                            className="px-4 py-2 bg-orange-500 hover:bg-orange-600 rounded-lg font-semibold transition disabled:opacity-60"
+                            disabled={isLoading}
+                        >
+                            Export Logs
+                        </button>
+                    </div>
                 </div>
             </div>
+        </div>
+    );
+}
+
+function Section({ title, children }) {
+    return (
+        <div className="mb-8">
+            <h2 className="text-lg font-bold text-orange-300 mb-2">{title}</h2>
+            {children}
         </div>
     );
 }
